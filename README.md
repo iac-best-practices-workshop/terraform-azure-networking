@@ -29,11 +29,7 @@ The module is structured to demonstrate best practices in Terraform module devel
    - Enhance the module by adding additional networking components, such as Network Security Groups or Route Tables.
    - Update variables and outputs accordingly.
 3. Test the Module:
-   - Use the module in a main.tf file to create a networking infrastructure.
-   - Validate the execution by running `terraform init`, `terraform plan`, and `terraform apply`.
-4. Document Your Changes:
-   - Update this `README.md` to reflect the changes you made to the module.
-   - Ensure clear documentation for future users of your module.
+   - Use the module in a `./usage/main.tf` file to create the networking infrastructure.
 
 ## Prerequisites
 
