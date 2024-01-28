@@ -40,23 +40,115 @@ The module is structured to demonstrate best practices in Terraform module devel
 - Basic understanding of Terraform and Azure.
 - Terraform installed on your machine.
 - Access to an Azure account with necessary permissions.
+- Azure CLI installed on your machine.
+- Perform `az login` before run the terraform commands
 
 ## Usage
 
-To use this module in your Terraform configuration, add the following:
+To see how you can use this module, first switch to the `usage` branch:
+
+```sh
+$ git switch usage
+Switched to branch 'usage'
+```
+
+Next, change directory to `usage` directory inside this project.
+
+```sh
+cd ./usage
+```
+
+Explore folder content. You will find a file named `main.tf` containing the following code:
+
+```hcl
+module "azure_network" {
+  source = "github.com/iac-best-practices-workshow/terraform-azure-networking"
+
+  location            = "uksouth"
+  resource_group      = "iac-workshop"
+  vnet_name           = "iac-workshop"
+  subnet_name         = "iac-workshop"
+}
+```
+
+This code show how you can reference this module from any project with network connectivity to this GitHub repository.
+
+Following, let's provision the resources running `terraform init` followed by `terraform plan`.
+
+```sh
+terraform init
+terraform plan
+``````
+
+It should produce an output like as follows (notice that 2 resources will be created):
+
+```txt
+Terraform used the selected providers to generate the following execution plan. 
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.azure_network.azurerm_subnet.subnet will be created
+  + resource "azurerm_subnet" "subnet" {
+      + address_prefixes                               = [
+          + "10.0.1.0/24",
+        ]
+      + enforce_private_link_endpoint_network_policies = (known after apply)
+      + enforce_private_link_service_network_policies  = (known after apply)
+      + id                                             = (known after apply)
+      + name                                           = "iac-workshop"
+      + private_endpoint_network_policies_enabled      = (known after apply)
+      + private_link_service_network_policies_enabled  = (known after apply)
+      + resource_group_name                            = "iac-workshop"
+      + virtual_network_name                           = "iac-workshop"
+    }
+
+  # module.azure_network.azurerm_virtual_network.vnet will be created
+  + resource "azurerm_virtual_network" "vnet" {
+      + address_space       = [
+          + "10.0.0.0/16",
+        ]
+      + dns_servers         = (known after apply)
+      + guid                = (known after apply)
+      + id                  = (known after apply)
+      + location            = "uksouth"
+      + name                = "iac-workshop"
+      + resource_group_name = "iac-workshop"
+      + subnet              = (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform 
+can't guarantee to take exactly these actions if you run 
+"terraform apply" now.
+```
 
 ```hcl
 module "azure_network" {
   source = "." # module is local
 
   location            = "uksouth"
-  resource_group_name = "iac-workshop"
+  resource_group      = "iac-workshop"
   vnet_name           = "iac-workshop"
   subnet_name         = "iac-workshop"
 }
 ```
 
-Replace `./path/to/this/module` with the actual path to this module.
+You can provision these resources running `terraform apply`. When asked if you want to perform these actions answer 'yes':
+
+```txt
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+```
+
+After that
 
 ## Contributing
 
