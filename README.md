@@ -47,9 +47,12 @@ To use this module in your Terraform configuration, add the following:
 
 ```hcl
 module "azure_network" {
-  source = "./path/to/this/module"
+  source = "." # module is local
 
-  // Define necessary variables here
+  location            = "uksouth"
+  resource_group_name = "iac-workshop"
+  vnet_name           = "iac-workshop"
+  subnet_name         = "iac-workshop"
 }
 ```
 
