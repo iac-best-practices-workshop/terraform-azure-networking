@@ -45,14 +45,7 @@ The module is structured to demonstrate best practices in Terraform module devel
 
 ## Usage
 
-To see how you can use this module, first switch to the `usage` branch:
-
-```sh
-$ git switch usage
-Switched to branch 'usage'
-```
-
-Next, change directory to `usage` directory inside this project.
+To see how you can use this module, change directory to `usage` directory inside this project.
 
 ```sh
 cd ./usage
