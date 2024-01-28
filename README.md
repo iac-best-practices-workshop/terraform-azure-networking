@@ -71,16 +71,16 @@ module "azure_network" {
 }
 ```
 
-This code show how you can reference this module from any project with network connectivity to this GitHub repository.
+This code shows you that you can reference any module by referecing its GitHub repository.
 
-Following, let's provision the resources running `terraform init` followed by `terraform plan`.
+Following, provision the resources running `terraform init` followed by `terraform apply`.
 
 ```sh
 terraform init
 terraform plan
 ``````
 
-It should produce an output like as follows (notice that 2 resources will be created):
+It should produce an output like as follows (notice that 3 resources will be created):
 
 ```txt
 Terraform used the selected providers to generate the following execution plan. 
@@ -88,6 +88,13 @@ Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
+
+  # module.azure_network.azurerm_resource_group.resource-group will be created
+  + resource "azurerm_resource_group" "resource-group" {
+      + id       = (known after apply)
+      + location = "uksouth"
+      + name     = "iac-workshop"
+    }
 
   # module.azure_network.azurerm_subnet.subnet will be created
   + resource "azurerm_subnet" "subnet" {
@@ -118,27 +125,12 @@ Terraform will perform the following actions:
       + subnet              = (known after apply)
     }
 
-Plan: 2 to add, 0 to change, 0 to destroy.
+Plan: 3 to add, 0 to change, 0 to destroy.
 
 ────────────────────────────────────────────────────────────────────────
-
-Note: You didn't use the -out option to save this plan, so Terraform 
-can't guarantee to take exactly these actions if you run 
-"terraform apply" now.
 ```
 
-```hcl
-module "azure_network" {
-  source = "." # module is local
-
-  location            = "uksouth"
-  resource_group      = "iac-workshop"
-  vnet_name           = "iac-workshop"
-  subnet_name         = "iac-workshop"
-}
-```
-
-You can provision these resources running `terraform apply`. When asked if you want to perform these actions answer 'yes':
+When asked if you want to perform these actions answer 'yes':
 
 ```txt
 Do you want to perform these actions?
@@ -148,7 +140,29 @@ Do you want to perform these actions?
   Enter a value: yes
 ```
 
-After that
+After execution, you will see the Vnet created in Azure portal:
+
+![Alt text](./images/vnets.png)
+
+### Workshop clean up
+
+To avoid unwanted charges, after finalizing the workshop, you should destroy the created resources running `terraform destroy`. Again, when asked if you want to destroy all resources answer `yes`:
+
+```sh
+terraform destroy
+...
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+...
+Destroy complete! Resources: 3 destroyed.
+```
+
+Congrats, you just learned how to reference a Terraform module.
 
 ## Contributing
 
