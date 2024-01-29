@@ -1,8 +1,8 @@
 module "azure_network" {
-  source = "github.com/iac-best-practices-workshow/terraform-azure-networking?ref=main"
+  source = "../."
 
   location            = "uksouth"
-  resource_group      = "iac-workshop"
-  vnet_name           = "iac-workshop"
-  subnet_name         = "iac-workshop"
+  resource_group      = "iac-workshop-networking"
+  vnet_name           = "iac-workshop-networking"
+  subnet_name         = "iac-workshop-networking"
 }
